@@ -1,66 +1,93 @@
 <template>
 <section class="events">
-<div class="events__container">
   <h1>The best events happening now.</h1>
 
-  <section v-if="errored">
-   <p>Error while loading events, try again!</p>
-  </section>
+  <section class="card__container">
+    <!-- <div v-if="loading"> -->
+        <!-- <Loader /> -->
+      <!-- <p>Loading...</p>
+    </div> -->
 
-  <section v-else class="card__container">
-  <div v-if="loading">Loading...</div>
-
-  <div v-else v-for="event in getEvents" :key="event.id">
+  <div v-for="event in events" :key="event.id">
+  <router-link role="link" class="event__link" :to="{
+      name: 'EventDetails',
+      params: { id: event.id }
+    }">
   <div class="card">
-  <router-link :to="`/eventPage/${event.id}`" class="router--link">
-    <div class="card__img__container">
-      <img :src="event.image" />
+    <div class="card__img-container">
+      <img v-if="event.image" :src="event.image" />
+      <img v-else :src="require('../../assets/img/defaultimg.jpg')"/>
     </div>
-    <div class="card__content">
-      <p>{{ new Date(event.start_time).toDateString() }}
-      <h4>{{ event.name }}</h4>
-      <h5>Tickets: {{ event.num_of_tickets }}</h5>
-    </div>
-  </router-link>
+  <div class="card__content">
+    <p>{{ new Date(event.start_time).toDateString() }}
+    <h4>{{ event.name }}</h4>
+    <h5>
+      <span class="free" v-if="event.is_free || Object.keys(event.num_of_tickets).length === 0">
+        Free
+      </span>
+      <span class="sold" v-else-if="event.is_sold_out">Sold out</span>
+      <span>Price: {{ event.price }}</span>
+    </h5>
   </div>
- 
+  </div>
+  </router-link>
+
   </div>
   </section>
-
-</div>
 </section>
 </template>
 
 
+
+
 <script>
-import axios from 'axios';
+// import axios from 'axios';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
 name: 'EventsListing',
+
 data() {
   return {
-  getEvents: [],
+  // getEvents: [],
+  // // getTicketType: [],
   loading: true,
   errored: false
 } 
 },
-mounted() {
-  this.fetchEvents()
-},
+
 methods: {
-  async fetchEvents() {
-    try {
-     const response = await axios.get('https://eventsflw.herokuapp.com/v1/events');
-     const data = response.data.data.events
-     this.getEvents = data
-     this.loading = false
-    }
-    catch(error) {
-      console.log(error)
-      this.errored = true
-    }
-  }
+  ...mapActions(["fetchEvents"])
+},
+
+computed: mapGetters(["events", "event", "loading"]),
+
+created() {
+  this.fetchEvents()
 }
+
+// mounted() {
+//   this.fetchEvents()
+// },
+
+// methods: {
+//   async fetchEvents() {
+//     try {
+//      const response = await axios.get('https://eventsflw.herokuapp.com/v1/events')
+//         // axios.get('https://eventsflw.herokuapp.com/v1/ticket-types/events/{{event_id}}')
+
+//      const eventsData = response.data.data.events;
+//     //  const ticketsData = response.data;
+//      this.getEvents = eventsData;
+//     //  this.getTicketType = ticketsData;
+//      this.loading = false
+//     }
+//     catch(error) {
+//       console.log(error)
+//       this.errored = true
+//     }
+//   }
+// }
 }
 </script>
 
@@ -72,9 +99,6 @@ methods: {
   margin: 4rem 3rem;
 }
 
-/* .events__container {
-  margin-top: 4rem;
-} */
 
 h1 {
  font-weight: 900;
@@ -93,7 +117,7 @@ h1 {
   margin: 1.5rem 0.6rem 1rem 0.6rem;
 }
 
-.router--link {
+.event__link {
   text-decoration: none;
 }
 
@@ -115,7 +139,7 @@ h5 {
   color: #4F4F4F;
 }
 
-.card__img__container {
+.card__img-container {
   width: 100%;
 }
 

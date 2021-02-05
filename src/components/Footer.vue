@@ -10,33 +10,35 @@
 </template>
 
 
-<script>
-export default {
-    
-}
-</script>
 
-
-<style scoped>
+<style lang="scss" scoped>
  .footer {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-    width: 70%;
+    width: 80%;
     margin: 6rem auto 1rem auto;
-    height: 80px;
+    
+
+  p {
+    padding-left: 60px;
+  }
  }
 
  .footer__links {
     display: flex;
     flex-flow: row wrap;
+
+  p {
+   padding-right: 40px;
+  }
  }
 
  p {
-   font-size: 14px;
-   line-height: 16px;
-   letter-spacing: 0.0028px;
-   color: #4A4A4A;
+  font-size: 14px;
+  color: #4A4A4A;
  }
+
+ 
 </style>
