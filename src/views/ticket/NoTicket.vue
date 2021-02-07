@@ -1,18 +1,28 @@
 <template>
+<div>
+<Nav />
 <section class="noticket">
     <h5>Enter your email address and we'll send your tickets right away!</h5>
     <div class="noticket__card-container">
-     <div class="noticket__card">
+    <div class="noticket__card">
 
-     </div>
+    </div>
     </div>
 </section>
+<Footer />
+</div>
 </template>
 
 
 <script>
+import Nav from '../../components/Nav';
+import Footer from '../../components/Footer';
 export default {
-    
+    name: 'NoTicket',
+    components: {
+        Nav,
+        Footer
+    }
 }
 </script>
 

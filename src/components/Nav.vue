@@ -4,7 +4,9 @@
 <div class="nav__links">
   <router-link to="/cart"><p>I didn't get my tickets</p></router-link>
   <div class="button__container">
-    <button>Create your own event</button>
+    <button class="app__button">
+      Create your own event
+    </button>
   </div>
 </div>
 </nav>
@@ -51,7 +53,7 @@ p {
     height: 36.6px;
    
 }
-
+/* 
 button {
     width: 100%;
     height: 100%;
@@ -67,6 +69,7 @@ button {
     font-size: 12px;
     text-align: center;
     overflow: none;
-    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.306764));
-}
+    box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
+} */
+
 </style>

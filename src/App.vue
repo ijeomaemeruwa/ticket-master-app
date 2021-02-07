@@ -1,23 +1,15 @@
 <template>
   <div id="app">
-    <Nav />
     <router-view />
-    <Footer />
   </div>
 </template>
 
 
 
 <script>
-import Nav from './components/Nav';
-import Footer from './components/Footer'
-
 export default {
-  name: 'App',
-  components: {
-    Nav,
-    Footer
-  }
+  name: 'App'
+  
 }
 </script>
 
@@ -40,4 +32,27 @@ body {
   background: #f2f2f2;
   font-family: 'Poppins', sans-serif;
  }
+
+
+.app__button {
+    width: 100%;
+    height: 100%;
+    background: #F5A623;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin-left: 30px;
+    outline: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    overflow: none;
+    box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
+}
+
+.content__button {
+
+}
 </style>
