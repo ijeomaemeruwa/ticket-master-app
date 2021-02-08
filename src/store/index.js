@@ -4,13 +4,13 @@ import axios from 'axios';
 Vue.use(Vuex);
 
 
-//Create store
 export default new Vuex.Store({
+
+//STATE
   state: {
     events: [],
     loading: false,
-    tickets: []
-    // pagination: []
+    tickets: [],
 
     // perPage: 9,
     // currentPage: 1,
@@ -18,35 +18,45 @@ export default new Vuex.Store({
   },
 
 
+//GETTERS
   getters: {
     events: state => state.events,
     loading: state => state.loading,
     tickets: state => state.tickets
   },
 
+
+//ACTIONS
   actions: {
     //Event Functionalities
-    async fetchEvents ({ commit }) {
+    async fetchEvents({ commit }) {
       commit('SET_LOADING', true)
       try {
-        const { data } = await axios.get(`https://eventsflw.herokuapp.com/v1/events`)
+        const { data } = await axios.get(`https://eventsflw.herokuapp.com/v1/events`);
         const events = await Promise.all(
           data.data.events.map(async event => {
-            const { data } = await axios.get(`https://eventsflw.herokuapp.com/v1/ticket-types/events/${event.id}`)
-            event.tickets = data.data
-            return event
+            const { data } = await axios.get(`https://eventsflw.herokuapp.com/v1/ticket-types/events/${event.id}`);
+            event.tickets = data.data;
+            return event;
           })
         )
       commit('SET_EVENTS', events)
       commit('SET_LOADING', false)
-
       } catch(error) {
         console.log(error)
       }
     },
 
-    registerForFree() {
-      //post request
+    freeEventRegister ({ id, data }) {
+    return new Promise((resolve, reject) => {
+    axios.post(`https://eventsflw.herokuapp.com/v1/events/${id}/register`, data)
+      .then(response => {
+        resolve(response)
+      })
+      .catch(err => {
+        reject(err)
+      })
+    })
     },
 
 
@@ -59,16 +69,13 @@ export default new Vuex.Store({
       commit('DECREMENT', id)
     },
 
-    setTickets ({ commit }, tickets) {
-      const newTickets = tickets.map(event => {
-        event.count = 0
-        return event
-      })
-      commit('SET_TICKETS', newTickets)
+    setTickets() {
+
     }
   },
 
 
+//MUTATIONS
   mutations: {
     SET_EVENTS: (state, events) => (state.events = events),
     SET_LOADING: (state, loading) => (state.loading = loading),
@@ -93,8 +100,14 @@ export default new Vuex.Store({
       }
       state.tickets.splice(ticketIndex, 1, ticket)
     },
-
-    SET_TICKETS: (state, ticket) => (state.tickets = [...ticket])
-  }
+    setTickets ({ commit }, tickets) {
+      const newTickets = tickets.map(event => {
+        event.count = 0
+        return event
+      })
+      commit('SET_TICKETS', newTickets)
+    }
+  },
 })
 
+  
