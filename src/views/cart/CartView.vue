@@ -35,74 +35,69 @@
 
 
 <!-- 2. Order and Payment Section-->
-<section class="checkout__section">
+<TabContainer>
+<header class="summary__header">
+<h4 v-if="currentTab !== 'CheckoutForm'">ORDER SUMMARY</h4>
+<h4 v-else @click="currentTab = ''" class="back">
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 12H5M12 19l-7-7 7-7" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Go Back</span>
+</h4>
+</header>
 
-    <h4>Checkout</h4>
+<section v-if="currentTab === 'CheckoutForm'">
+<keep-alive>
+  <component 
+  :totalOrder="totalOrder" :vat="vat" :subtotal="subtotal" :id="event.id" :is="currentTab">
+  </component>
+</keep-alive>
+</section>
 
-<!-- Header     -->
-<!-- <div class="checkout__section-header">
-<h3 v-if="currentTab !== 'CheckoutForm'"> Order summary </h3>
-<h3 v-else class="form" @click="currentTab = ''">
-   <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-   <path d="M19 12H5M12 19l-7-7 7-7" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-   </svg>
-   <span> Go back</span>
-</h3>
-</div> -->
-<!-- xx -->
-
-<!-- <div v-if="currentTab === 'CheckoutForm'">
-  <keep-alive>
-  <component :total="totalOrder" :vat="vat" :subtotal="subtotal" :id="event.id" :is="currentTab"></component>
-  </keep-alive>
-</div> -->
-
-<!-- content -->
-<!-- <div class="" v-if="currentTab !== 'CheckoutForm'">
-
-<div class="checkout__summary-ticket">
-<div class="checkout__summary-ticket-info" v-for="(ticket,index) in tickets" :key="index">
-    <p class="ticket-name">{{ ticket.count }} - {{ ticket.name }}</p>
-    <p class="ticket-total">N{{ localeString(ticket.price) }}</p>
+<section v-if="currentTab !== 'CheckoutForm'" class="summary__section">
+<div class="summary__details-container">
+<div class="summary__details-item">
+<div class="summary__details" v-for="(ticket,index) in tickets" :key="index">
+    <p class="name">{{ ticket.count }} - {{ ticket.name }}</p>
+    <p class="total">N{{ localeString(ticket.price) }}</p>
 </div>
 </div>
 
-<div class="checkout__summary-details">
-<div class="checkout__summary-details-item">
-    <p>Sub-total</p>
-    <p>N{{ localeString(subtotal) }}</p>
+<div class="summary__details-checkout">
+<div class="summary__details">
+    <p class="name">Sub-total</p>
+    <!-- <p class="total">N 00</p> -->
+    <p>N{{ localeString(subtotal) }}</p> 
 </div>
-<div class="checkout__summary-details-item">
-    <p>VAT</p>
-    <p>N1000</p>
+    <div class="summary__details">
+    <p class="name">VAT</p>
+    <p class="total">N1000</p>
 </div>
-<div class="checkout__summary-details-item">
-    <h6>Total payment</h6>
-    <h6>N{{ localeString(total) }}</h6>
-</div>
-<div class="button-wrapper">
-    <button class="app__button" @click="currentTab = 'CheckoutForm'"  :disabled="order">
-    Continue
-    </button>
+    <div class="summary__details">
+    <p class="name">TOTAL PAYMENT</p>
+    <!-- <h6>N 1100</h6> -->
+    <h6>N{{ localeString(totalOrder) }}</h6>
 </div>
 </div>
-</div> -->
-<!-- xx -->
-
+</div> 
+ <div class="btn__container">
+   <button class="app__button" @click="currentTab = 'CheckoutForm'">
+       CONTINUE
+   </button>
+ </div> 
+</section>
 
 <!-- Money back guaratee -->
 <div class="warranty__section">
 <svg width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M12.62 25.01l-1.846.828a1.857 1.857 0 01-2.265-.607l-1.185-1.64a.929.929 0 00-.658-.38l-2.013-.206a1.857 1.857 0 01-1.657-1.658l-.208-2.013a.929.929 0 00-.38-.658L.77 17.491a1.857 1.857 0 01-.607-2.265L.99 13.38a.929.929 0 000-.76l-.828-1.846A1.857 1.857 0 01.77 8.509l1.64-1.185a.929.929 0 00.38-.658l.207-2.013a1.857 1.857 0 011.657-1.657l2.013-.208a.929.929 0 00.658-.38L8.509.77a1.857 1.857 0 012.265-.607L12.62.99a.929.929 0 00.76 0l1.846-.828a1.857 1.857 0 012.265.607l1.185 1.64a.929.929 0 00.658.38l2.013.207c.875.09 1.567.782 1.657 1.657l.207 2.013a.929.929 0 00.38.658l1.64 1.185c.713.516.966 1.461.607 2.265l-.828 1.846a.928.928 0 000 .76l.828 1.846c.36.804.106 1.749-.607 2.265l-1.64 1.185a.929.929 0 00-.38.658l-.206 2.013a1.857 1.857 0 01-1.658 1.657l-2.013.207a.929.929 0 00-.658.38l-1.185 1.64a1.857 1.857 0 01-2.265.607l-1.846-.828a.928.928 0 00-.76 0zM7.983 11.243L6.407 12.82l5.29 5.29 8.122-8.12-1.576-1.577-6.546 6.546-3.714-3.715z" fill="#2D9CDB"/>
 </svg>
-<div class="money-back">
+<div class="warranty__details">
   <h6>100% customer protection</h6>
   <p>Money back guarantee</p>
 </div>
 </div>
-<!-- xx -->
-</section>
-
+</TabContainer>
 </div>
 </main>
 </template>
@@ -113,7 +108,8 @@
 import { mapGetters, mapActions } from 'vuex';
 import Increment from '../../components/Increment';
 import Decrement from '../../components/Decrement';
-// import CheckoutForm from './CheckoutForm';
+import TabContainer from './TabContainer';
+import CheckoutForm from './CheckoutForm';
 
 export default {
  name: 'CartView',
@@ -121,36 +117,38 @@ export default {
  components: {
     Increment,
     Decrement,
-    // CheckoutForm
+    TabContainer,
+    CheckoutForm
  },
 
 props: ['id'],
 
 data () {
     return {
-      currentTab: '',
-      event: {}
+      event: {},
+      currentTab: ''
     }
 },
 
 computed: {
 ...mapGetters(['tickets', 'events']),
-subtotal: () => {
+
+subtotal() {
     let total = 0
     this.tickets.forEach(ticket => {
     total = total + ticket.count * ticket.price
     })
     return total
 },
-vat: () => {
+vat() {
     const vat = this.subtotal * (5 / 100)
     return vat
 },
-totalOrder: () => {
+totalOrder() {
     const total = this.vat + this.subtotal
     return total
 },
-order: () => {
+order() {
     const value = this.tickets.some(ticket => ticket.count >= 1)
     return !value
 }
@@ -158,13 +156,14 @@ order: () => {
 
 methods: {
     ...mapActions(['increment', 'decrement', 'setTickets']),
-    increment: (event) => {
+
+    increment(event) {
       this.increment(event)
     },
-    decrement: (event) => {
+    decrement(event) {
       this.decrement(event)
     },
-    localeString: (price) => {
+    localeString(price) {
       return price.toLocaleString()
     }
 },
@@ -181,23 +180,31 @@ methods: {
 
 
 <style lang="scss" scoped>
+
+//Cart
 .cart {
     height: 100%;
-    // padding: 2rem 3rem;
 .cart__container {
     display: flex;
     flex-flow: row wrap;
 }
 .cart__section {
-    width: 100%;
+    width: 70%;
+}
+
+@media screen and (max-width: 768px) {
+    .cart__section {
+        width: 100%;
+    }
 }
 
 
 .cart__close-btn {
    width: 100px;
    height: 49px;
-   margin: 1rem 0 1rem 3rem;
-.close-btn {
+   margin: 2rem 0 1rem 7rem;
+}
+.cart__close-btn .close-btn {
     width: 100%;
     outline: inherit;
     box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.25);
@@ -217,7 +224,7 @@ methods: {
 
 
 .cart__content {
-    padding: 3rem 2rem;
+    padding: 3rem 7rem;
 }
 .cart__content h2 {
     font-weight: 900;
@@ -241,6 +248,17 @@ methods: {
     }
 }
 
+@media screen and (max-width: 768px) {
+.cart__close-btn {
+   width: 100px;
+   height: 49px;
+   margin: 2rem 0 1rem 1rem;
+   }
+
+   .cart__content {
+        padding: 2rem;
+    }
+}
 
 .cart__content-tickets {
     margin-top: 5rem;
@@ -271,15 +289,12 @@ methods: {
     font-size: 24px;
   }
 }
-}
 
 
 .cart__content-ticket-count {
     display: flex;
     align-items: center;
 }
-
-
 .ticket_sale p {
     font-size: 12px;
     letter-spacing: 0.5px;
@@ -287,33 +302,83 @@ methods: {
 }
 
 
-.checkout__section {
-    width: 100%;
-    height: 400px;
-    background: #fff;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// Tab
+.summary__header {
+    padding: 2rem 2rem 0 2rem;  
 }
 
+.back {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
 
-// .checkout__summary {
-
-// }
+.summary__header h4 {
+  padding-bottom: 1.2rem;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.065em;
+  color: #333333;
+  border-bottom: 1px solid #bdbdbd;
+}
+.summary__section {
+    padding: 2rem;
+}
+.summary__details-item {
+   padding-bottom: 12rem;
+   border-bottom: 1px solid #bdbdbd;
+}
+.summary__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.summary__details p,
+.summary__details h6 {
+    padding-bottom: 0.6rem;
+}
+.summary__details p {
+   font-size: 14px;
+}
+.summary__details h6 {
+    font-size: 20px;
+    font-weight: 600;
+}
+.summary__details .name {
+    font-weight: 600;
+}
+.summary__details .total {
+    font-weight: normal;
+}
+.summary__details-checkout {
+   padding-top: 2rem;
+}
+.btn__container {
+    max-width: 368px;
+    height: 48px;
+    margin-top: 1rem;
+}
 
 
 .warranty__section {
     display: flex;
     align-items: center;
-
-.money-back h6 {
+    margin-left: 2.2rem;
+}
+.warranty__details {
+    padding-left: 10px;
+}
+.warranty__details h6 {
    font-weight: bold;
    font-size: 14px;
    letter-spacing: 0.5px;
    color: #333;
 }
-.money-back p {
+.warranty__details p {
   font-size: 12px;
   letter-spacing: 0.5px;
   color: #828282;
-}
 }
 </style>
