@@ -1,5 +1,6 @@
 <template>
-<section class="form">
+<section class="form"
+>
 <div class="form__container">
   <label for="name" class="form-label">Full name</label>
   <div class="form-input__container">
@@ -8,7 +9,7 @@
       v-model="name"
       type="text"
       name="name"
-      aria-required="true"
+      required
     />
   </div>
   
@@ -19,7 +20,7 @@
       v-model="email"
       type="email"
       name="email"
-      aria-required="true"
+      required
     />
   </div>
   
@@ -31,23 +32,22 @@
       v-model="phone"
       type="text"
       name="phone"
-      aria-required="true"
+      required
     />
   </div>
 
 <div class="checkout__summary">
   <div class="checkout__summary-details">
    <p>TOTAL PAYMENT</p>
-   <h6>N 1100</h6>
+   <h6 class="total-amount">N{{ localeString(totalOrder) }}</h6>
   </div>
-  <!-- <h6 class="total-amount">N{{ localeString(totalOrder) }}</h6> -->
+  
 </div>
 
  <!-- Payment Button      -->
 <div class="btn__container">
-  <button class="app__button">
-    <!-- PAY N{{ localeString(totalOrder) }} -->
-    PAY N 1100
+  <button class="app__button" @click="makePayment">
+    PAY N{{ localeString(totalOrder) }}
   </button>
 </div>
 </div>
@@ -55,38 +55,91 @@
 </template>
 
 
-
 <script>
 import { mapGetters } from 'vuex';
-
+import axios from 'axios';
 export default {
   name: 'TabContainer',
 
-
-// data () {
-//   return {
-//     data: {
-//       name: '',
-//       email: '',
-//       phone: ''
-//     }
-//   }
-// },
+data () {
+  return {
+    data: {
+      name: '',
+      email: '',
+      phone: ''
+    }
+  }
+},
 
 props: ['totalOrder', 'vat', 'subtotal', 'id'],
 
-computed: {
-    ...mapGetters(['tickets'])
+methods: {
+  localeString: function(price) {
+    return price.toLocaleString();
   },
 
-methods: {
-   localeString: (price) => {
-      return price.toLocaleString()
-    }
+makePayment: function () {
+const tickets = {}
+this.tickets.map(ticket => {
+if (ticket.count >= 1) {
+  tickets[ticket.id] = ticket.count
+  }
+})
+
+const data = {
+  ...this.data,
+  base_amount: this.totalOrder,
+  value_added_tax: this.vat,
+  event_id: parseInt(this.id),
+  tickets_bought: tickets
 }
 
+const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
+  window.FlutterwaveCheckout({
+  public_key: TEST_KEY,
+  tx_ref: 'ticket-order' + new Date(),
+  amount: this.totalOrder,
+  currency: 'NGN',
+  country: 'NG',
+  payment_options: 'card',
+  customer: {
+    email: this.data.email,
+    phone_number: this.data.phone,
+    name: this.data.name
+  },
+
+  callback: function () {
+  axios.post('https://eventsflw.herokuapp.com/v1/orders', data)
+    .then(response => {
+      console.log(response)
+      this.$store.dispatch('clear')
+      window.href = '/'
+    })
+    .catch(err => console.error(err))
+  },
+
+  onclose: function () {},
+    customizations: {
+      title: 'Ticke Master',
+      description: 'Payment for Event',
+      logo: 'https://flutterwave.com/images/logo-colored.svg',
+    }
+    })
+  }
+},
+
+computed: {
+  ...mapGetters(['tickets'])
+},
+
+created() {
+  const script = document.createElement("script");
+  script.src = "https://checkout.flutterwave.com/v3.js";
+  document.getElementsByTagName("head")[0].appendChild(script);
+},
 }
 </script>
+
 
 
 <style scoped>

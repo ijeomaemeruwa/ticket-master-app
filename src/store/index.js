@@ -24,6 +24,10 @@ getters: {
 
 //ACTIONS
 actions: {
+  clear ({ commit }) {
+    commit('CLEAR ')
+  },
+  
   async fetchEvents({ commit }) {
     commit('SET_LOADING', true)
     try {
@@ -43,11 +47,11 @@ actions: {
   },
 
 //Cart Functionalities
-  increment ({ commit }, id) {
+  incrementCount ({ commit }, id) {
     commit('INCREMENT', id)
   },
 
-  decrement ({ commit }, id) {
+  decrementCount ({ commit }, id) {
     commit('DECREMENT', id)
   },
 
@@ -64,12 +68,18 @@ actions: {
 
 //MUTATIONS
   mutations: {
-    SET_EVENTS(state, events) {(state.events = events)},
-    SET_LOADING(state, loading) {(state.loading = loading)},
-    CLEAR: (state) => (state.tickets = ''),
+    SET_EVENTS(state, events) {
+      (state.events = events)
+    },
+    SET_LOADING(state, loading) {
+      (state.loading = loading)
+    },
+    CLEAR(state) {
+      (state.tickets = '')
+    },
 
     INCREMENT(state, id) {
-      const ticket = state.tickets.find(ticket => ticket.id === id)
+      const ticket = state.tickets.find(item => item.id === id)
       const ticketIndex = state.tickets.indexOf(ticket)
       ticket.count++
       if (ticket.count >= ticket.qty_available) {
@@ -79,7 +89,7 @@ actions: {
     },
 
     DECREMENT(state, id) {
-      const ticket = state.tickets.find(ticket => ticket.id === id)
+      const ticket = state.tickets.find(item => item.id === id)
       const ticketIndex = state.tickets.indexOf(ticket)
       ticket.count--
       if (ticket.count <= 0) {

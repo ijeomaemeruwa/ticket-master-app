@@ -33,7 +33,6 @@
 </section>
 
 
-
 <!-- 2. Order and Payment Section-->
 <TabContainer>
 <header class="summary__header">
@@ -66,7 +65,6 @@
 <div class="summary__details-checkout">
 <div class="summary__details">
     <p class="name">Sub-total</p>
-    <!-- <p class="total">N 00</p> -->
     <p>N{{ localeString(subtotal) }}</p> 
 </div>
     <div class="summary__details">
@@ -75,7 +73,6 @@
 </div>
     <div class="summary__details">
     <p class="name">TOTAL PAYMENT</p>
-    <!-- <h6>N 1100</h6> -->
     <h6>N{{ localeString(totalOrder) }}</h6>
 </div>
 </div>
@@ -133,38 +130,38 @@ data () {
 computed: {
 ...mapGetters(['tickets', 'events']),
 
-subtotal() {
-    let total = 0
+subtotal: function() {
+    let total = 0;
     this.tickets.forEach(ticket => {
     total = total + ticket.count * ticket.price
-    })
-    return total
+    });
+    return total;
 },
-vat() {
-    const vat = this.subtotal * (5 / 100)
-    return vat
+vat: function() {
+    const vat = this.subtotal * (5 / 100);
+    return vat;
 },
-totalOrder() {
-    const total = this.vat + this.subtotal
-    return total
+totalOrder: function() {
+    const total = this.vat + this.subtotal;
+    return total;
 },
-order() {
-    const value = this.tickets.some(ticket => ticket.count >= 1)
-    return !value
+order: function() {
+    const value = this.tickets.some(ticket => ticket.count >= 1);
+    return !value;
 }
 },
 
 methods: {
-    ...mapActions(['increment', 'decrement', 'setTickets']),
+    ...mapActions(['incrementCount', 'decrementCount', 'setTickets']),
 
-    increment(event) {
-      this.increment(event)
+    increment: function(event) {
+      this.incrementCount(event);
     },
-    decrement(event) {
-      this.decrement(event)
+    decrement: function(event) {
+      this.decrementCount(event);
     },
-    localeString(price) {
-      return price.toLocaleString()
+    localeString: function(price) {
+      return price.toLocaleString();
     }
 },
 
@@ -179,11 +176,11 @@ methods: {
 
 
 
-<style lang="scss" scoped>
+<style scoped>
 
-//Cart
 .cart {
     height: 100%;
+}
 .cart__container {
     display: flex;
     flex-flow: row wrap;
@@ -191,13 +188,6 @@ methods: {
 .cart__section {
     width: 70%;
 }
-
-@media screen and (max-width: 768px) {
-    .cart__section {
-        width: 100%;
-    }
-}
-
 
 .cart__close-btn {
    width: 100px;
@@ -215,13 +205,11 @@ methods: {
     padding: 0.8rem 1.5rem;
     display: flex;
     align-items: center;
-
-  &:hover {
+    font-weight: 600;
+}
+.cart__close-btn .close-btn:hover {
      opacity: 0.5;
-    }
 }
-}
-
 
 .cart__content {
     padding: 3rem 7rem;
@@ -239,26 +227,7 @@ methods: {
     color: #4F4F4F;
     font-family: 'Open Sans', sans-serif;
 }
-@media screen and (min-width: 900px) {
-    .cart__content h2 {
-        font-size: 36px;
-    }
-    .cart__content h4 {
-        font-size: 18px;
-    }
-}
 
-@media screen and (max-width: 768px) {
-.cart__close-btn {
-   width: 100px;
-   height: 49px;
-   margin: 2rem 0 1rem 1rem;
-   }
-
-   .cart__content {
-        padding: 2rem;
-    }
-}
 
 .cart__content-tickets {
     margin-top: 5rem;
@@ -283,13 +252,6 @@ methods: {
 .cart__content-ticket-type span {
     padding: 0 10px;
 }
-@media screen and (min-width: 900px) {
-.cart__content-ticket-type p,
-.cart__content-ticket-type span {
-    font-size: 24px;
-  }
-}
-
 
 .cart__content-ticket-count {
     display: flex;
@@ -301,8 +263,39 @@ methods: {
     color: #828282;
 }
 
+@media screen and (max-width: 768px) {
+.cart__section {
+    width: 100%;
+    }
 
-// Tab
+.cart__close-btn {
+   width: 100px;
+   height: 49px;
+   margin: 2rem 0 1rem 1rem;
+   }
+
+   .cart__content {
+    padding: 2rem;
+  }
+}
+
+
+@media screen and (min-width: 900px) {
+.cart__content h2 {
+  font-size: 36px;
+}
+.cart__content h4 {
+  font-size: 18px;
+}
+
+.cart__content-ticket-type p,
+.cart__content-ticket-type span {
+    font-size: 24px;
+  }
+}
+
+
+
 .summary__header {
     padding: 2rem 2rem 0 2rem;  
 }
