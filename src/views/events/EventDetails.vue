@@ -7,7 +7,7 @@
 <section class="event__content-main">
 <div class="event__content-img">
   <img v-if="event.image" :src="event.image" />
-  <img v-else :src="require('../../assets/img/defaultimg.jpg')"/>
+  <img v-else :src="require('../../assets/img/defaultimg.jpg')" class="lazy"/>
 </div>
 <div class="event__content-details">
  <p>{{ new Date(event.start_time).toDateString() }}</p>
@@ -23,7 +23,7 @@
     {{ getMinMax(event.tickets) }}
  </h6>
 
-<div class="button_container">
+<div class="btn__container">
     <button v-if="event.tickets.length === 0" class="app__button" @click="showModal">
      Register for free
     </button>
@@ -79,7 +79,6 @@
 </header>
 <div class="form">
 <div class="form__container">
-  
   <label for="name" class="form-label">Full name</label>
   <div class="form-input__container">
     <input
@@ -90,7 +89,6 @@
       aria-required="true"
     />
   </div>
-  
   <label for="email" class="form-label">Email address</label>
   <div class="form-input__container">
     <input
@@ -101,10 +99,9 @@
       aria-required="true"
     />
   </div>
-  
   <label for="phone" class="form-label">Phone number</label>
   <div class="form-input__container">
-     <input
+    <input
       class="form-input"
       id="name"
       v-model="phone"
@@ -115,39 +112,10 @@
   </div>
 </div>
 <div class="btn__container">
-  <button class="app__button">
-    REGISTER
-  </button>
+  <button class="app__button">REGISTER</button>
 </div>
 </div>
 </div>
-
-<!-- <div class="success__modal">
-  <div class="success__modal-header">
-  <p @click="closeModal">
-    <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </p>
-  </div>
-  <div class="success__modal-check">
-    <div class="success__modal-check-icon">
-    <svg width="137" height="137" viewBox="0 0 137 137" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path class="checkmark__circle" d="M125.583 63.2476V68.4993C125.576 80.8089 121.59 92.7864 114.22 102.646C106.849 112.505 96.4894 119.717 84.685 123.207C72.8806 126.698 60.2642 126.278 48.7174 122.013C37.1707 117.747 27.3122 109.862 20.6124 99.5359C13.9126 89.2093 10.7303 76.9937 11.5402 64.7108C12.3502 52.4279 17.1089 40.7358 25.1067 31.3784C33.1045 22.021 43.9128 15.4996 55.9197 12.7868C67.9267 10.074 80.4889 11.3151 91.7328 16.3251"
-    stroke="#F5A623"
-    stroke-width="4"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    />
-    <path class="checkmark__check" d="M125.583 22.8335L68.5 79.9739L51.375 62.8489" stroke="#F5A623" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-  </div>
-    <h5 class="success__modal-text">
-    You have successfully registered for {{ event.name }}.
-    </h5>
-</div> -->
-
 </section>
 </Modal>
 
@@ -163,41 +131,35 @@ import Footer from '../../components/Footer';
 import Modal from '../../components/Modal';
 import { mapGetters, mapActions } from 'vuex'
 export default {
-    name: 'EventDetails',
-    components: {
-        Nav,
-        Footer,
-        Modal
-    },
+  name: 'EventDetails',
+  components: {
+      Nav,
+      Footer,
+      Modal
+  },
 
-    props: ['id'],
+  props: ['id'],
 
-    data() {
-    return {
-      event: {},
-      isModalVisible: false,
-      // registered: false,
-      // data: {
-      //   name: '',
-      //   email: '',
-      //   phone: ''
-      // },
-    }
-    },
+  data() {
+  return {
+    event: {},
+    isModalVisible: false,
+  }
+  },
 
-    methods: {
-    ...mapActions(['fetchEvents']),
+  methods: {
+  ...mapActions(['fetchEvents']),
 
-    showModal() {
-      this.isModalVisible = true;
-    },
+  showModal() {
+    this.isModalVisible = true;
+  },
 
-    closeModal() {
-      this.isModalVisible = false;
-    },
+  closeModal() {
+    this.isModalVisible = false;
+  },
 
 // get minimum and maximum of a price
-  getMinMax: (tickets) => {
+  getMinMax: function (tickets) {
     const price = []
   tickets.map(ticket => {
     price.push(ticket.price)
@@ -214,16 +176,31 @@ computed: {
   ...mapGetters(['events'])
 },
 
-created () {
+created() {
   const id = this.$route.params.id
   this.event = this.events.find(event => parseInt(event.id) === parseInt(id))
-}   
+},
+
+mounted() {
+  if(localStorage.event) {
+    this.events = JSON.parse(localStorage);
+  }
+},
+
+watch: {
+  events: {
+    handler(data){
+      localStorage.events = JSON.stringify(data);
+    },
+    deep: true
+  }
+}
 }
 </script>
 
 
 
-<style lang="scss" scoped>
+<style scoped>
 .event {
     padding: 3rem 1rem;
     background-image: url("../../assets/img/bglines.png");
@@ -231,50 +208,29 @@ created () {
     background-size: cover;
     display: flex;
     flex-direction: column;
-
-@media screen and (min-width: 1040px) {
-  padding: 3rem 7rem;
+    margin: 0 auto;
 }
-}
-
-
 .event__content-main,
 .event__content-other {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
 }
-
-@media screen and (min-width: 1040px) {
-  .event__content-main{
-   display: flex;
-   flex-direction: row-reverse;
-  }
-
-  .event__content-other {
-    display: flex;
-    flex-direction: row;
-  }
-}
-
-
 .event__content-main {
     border-bottom: 1px solid #CCB7B1;
     padding-bottom: 3rem;
 }
-
 .event__content-other {
    padding-top: 3rem;
 }
 
 
 .event__content-img {
-  width: 50%;
+  width: 40%;
 }
-
 img {
   width: 460px;
   height: 430px;
@@ -283,61 +239,46 @@ img {
   object-fit: cover;
 }
 
-@media screen and (max-width: 768px) {
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  
-.event__content-img {
-  width: 100%;
-  }
-}
-
-
 
 .event__content-details {
-    width: 100%;
+  width: 100%;
 }
-
 .event__content-details p {
   font-size: 15px;
+  font-family: "SF Display";
   text-transform: uppercase;
   color: #12122C; 
   padding-top: 1rem; 
 }
-
 .event__content-details h2 {
   font-size: 30px;
   color: #12122C;
+  font-weight: 700;
   padding: 0.8rem 0 0.3rem 0;
 }
-
 .event__content-details h4 {
-  font-size: 15px;
-  line-height: 28px;
+  font-size: 16px;
   color: #4A4A4A;
+  line-height: 28px;
   font-style: italic;
-  font-weight: normal;
+  font-weight: 400;
   padding: 0.6rem 0 5rem 0;
   width: 90%;
 }
-
 .event__content-details h6 {
   font-size: 22px;
-  line-height: 28px;
+  font-weight: 700;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: #333;
   padding-bottom: 1rem;
 }
-
 @media screen and (min-width: 768px) and (min-width: 1200px) {
   .event__content-details {
     width: 50%;
 }
 
 .event__content-details p {
-  font-size: 18px;
+  font-size: 20px;
   padding: 0;  
 }
 
@@ -359,20 +300,12 @@ img {
 .event__content-venue,
 .event__content-date {
   width: 100%;
-  padding-top: 1rem;
-
-  @media screen and (min-width: 1024px) {
-    width: 50%;
-  }
 }
-
-
-
 .event__content-venue h3,
 .event__content-date h3 {
-   font-weight: normal;
+   font-family: "SF Display";
+   font-weight: 500;
    font-size: 16px;
-   line-height: 24px;
    align-items: center;
    text-transform: uppercase;
    color: #333333;
@@ -380,63 +313,33 @@ img {
 
 .event__content-venue h4,
 .event__content-date h4 {
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 20px;
   line-height: 32px;
   color: #333333;
   margin: 1rem 0;
 }
-@media screen and (min-width: 768px) and (min-width: 1200px) {
-.event__content-venue h3,
-.event__content-date h3 {
-   font-weight: normal;
-   font-size: 18px;;
-}
-
-.event__content-venue h4,
-.event__content-date h4 {
-  font-weight: 600;
-  font-size: 24px;
-}
-}
-
-
-
 .event__map {
     display: flex;
     align-items: center;
 }
-
 .event__map p {
     padding-left: 10px;
     font-size: 16px;
     color: #F5A623;
 }
-
-
-
-.button_container {
-  width: 348px;
-  height: 50px;
-//   margin-right: auto;
-}
-
-
 .event__content-other h6 {
   font-size: 16px;
   font-weight: normal;
   line-height: 20px;
   color: #12122C;
   padding-bottom: 10px;
-@media screen and (min-width: 768px) and (min-width: 1200px) {
-  font-size: 18px;
 }
-}
+
 
 .modal__container {
   padding: 2rem 3rem 3rem 2rem;
 }
-
 .modal__header {
   display: flex;
   justify-content: space-between;
@@ -444,7 +347,6 @@ img {
   padding-bottom: 18px;
   border-bottom: 1px solid #BDBDBD;
 }
-
 .modal__header p {
   cursor: pointer;
   font-style: normal;
@@ -456,11 +358,10 @@ img {
 
 .form {
   margin: auto;
-
+}
 .form__container {
-  padding: 1rem 0;
-
-
+  padding: 1rem 0.2rem;
+}
 .form-label {
   font-family: 'Open Sans', sans-serif;
   font-weight: normal;
@@ -468,14 +369,13 @@ img {
   letter-spacing: 0.5px;
   color: #333333;
 }
-
 .form-input__container {
   display: flex;
   flex-direction: column;
   max-width: 368px;
   height: 48px; 
   margin: 10px 0;
-
+}
 .form-input {
   width: 100%;
   height: 100%;
@@ -486,12 +386,64 @@ img {
   color: #333;
   outline-color: #E0E0E0;
 }
-}
-}
-
 .btn__container {
   max-width: 368px;
   height: 48px;
 }
+
+
+
+@media screen and (min-width: 768px) and (min-width: 1200px) {
+.event__content-venue h3,
+.event__content-date h3 {
+  font-weight: normal;
+  font-size: 18px;;
+}
+.event__content-venue h4,
+.event__content-date h4 {
+  font-weight: 600;
+  font-size: 24px;
+}
+.event__content-other h6{
+  font-size: 18px;
+} 
+}
+
+@media screen and (min-width: 1040px) {
+ .event{
+   padding: 3rem 9rem;
+ } 
+ .event__content-main{
+   display: flex;
+   flex-direction: row-reverse;
+  }
+  .event__content-other {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .event__content-date{
+   width: 45%;
+   padding-left: 3rem;
+  }
+  .event__content-venue {
+    width: 45%;
+    margin-bottom: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+.event__content-img {
+  width: 100%;
+  }
+
+ img {
+    width: 100%;
+    height: 100%;
+  }
+  .event__content-date{
+    padding-top: 1.2rem;
+  }
 }
 </style>

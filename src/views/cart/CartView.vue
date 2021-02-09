@@ -6,7 +6,7 @@
 <section class="cart__section">
 <header class="cart__close-btn">
   <button 
-    @click.prevent="$router.go(-1)" 
+    @click.prevent="$router.go(-2)" 
     class="close-btn">
     x Close
   </button>
@@ -79,7 +79,7 @@
 </div> 
  <div class="btn__container">
    <button class="app__button" @click="currentTab = 'CheckoutForm'">
-       CONTINUE
+    CONTINUE
    </button>
  </div> 
 </section>
@@ -165,7 +165,7 @@ methods: {
     }
 },
 
- created () {
+created () {
     const id = this.$route.params.id
     const eventTicket = this.events.find(event => parseInt(event.id) === parseInt(id))
     this.setTickets(eventTicket.tickets)
@@ -177,7 +177,6 @@ methods: {
 
 
 <style scoped>
-
 .cart {
     height: 100%;
 }
@@ -205,10 +204,10 @@ methods: {
     padding: 0.8rem 1.5rem;
     display: flex;
     align-items: center;
-    font-weight: 600;
+    font-weight: 700;
 }
 .cart__close-btn .close-btn:hover {
-     opacity: 0.5;
+    opacity: 0.5;
 }
 
 .cart__content {
@@ -263,20 +262,19 @@ methods: {
     color: #828282;
 }
 
+
 @media screen and (max-width: 768px) {
 .cart__section {
     width: 100%;
-    }
-
+}
 .cart__close-btn {
    width: 100px;
    height: 49px;
    margin: 2rem 0 1rem 1rem;
-   }
-
-   .cart__content {
-    padding: 2rem;
-  }
+}
+.cart__content {
+   padding: 2rem;
+}
 }
 
 
@@ -287,11 +285,10 @@ methods: {
 .cart__content h4 {
   font-size: 18px;
 }
-
 .cart__content-ticket-type p,
 .cart__content-ticket-type span {
     font-size: 24px;
-  }
+}
 }
 
 
@@ -299,13 +296,11 @@ methods: {
 .summary__header {
     padding: 2rem 2rem 0 2rem;  
 }
-
 .back {
     cursor: pointer;
     display: flex;
     align-items: center;
 }
-
 .summary__header h4 {
   padding-bottom: 1.2rem;
   font-size: 18px;

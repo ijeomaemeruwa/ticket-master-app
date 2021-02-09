@@ -18,13 +18,15 @@ export default {
 
 
 <style>
+@import "../src/assets/main.css";
+
 *, ::before, ::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
+/* :root {
   --background: #f2f2f2;
   --dark-1: #333;
   --dark-2: #12122c;
@@ -34,18 +36,17 @@ export default {
   --accent-1: #F5A623;
   --accent-2: #828282;
   --accent-input: #fdfdfd;
-}
+} */
 
 
 body {
   background: #f2f2f2;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Flutterwave';
  }
 
 .app-enter-active {
   animation: slide-in 0.3s ease-out forwards;
 }
-
 .app-leave-active {
   animation: slide-out 0.3s ease-out forwards;
 }
@@ -61,7 +62,6 @@ body {
     opacity: 1;
   }
 }
-
 @keyframes slide-out {
   from {
     transform: scale(1);
@@ -101,4 +101,5 @@ body {
   padding: 5px;
   box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
 }
+
 </style>

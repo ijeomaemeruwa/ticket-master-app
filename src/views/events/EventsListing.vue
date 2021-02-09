@@ -5,7 +5,7 @@
   <h1>The best events happening now.</h1>
 
   <section v-if="loading" class="loading">
-    <h2>Loading...</h2>
+    <h3>Loading...</h3>
   </section>
 
   <section v-else class="card__container">
@@ -21,6 +21,7 @@
         :alt="`${event.name} event`"
       />
       <img v-else 
+        class="lazy"
        :src="require('../../assets/img/defaultimg.jpg')" 
        :alt="`${event.name} event`"
       />
@@ -73,15 +74,16 @@ methods: {
     max === min ? minMax = `N${max.toLocaleString()}` : minMax = `N${min.toLocaleString()} - N${max.toLocaleString()}`
     return minMax
   }
-  },
+},
 
 computed:{
- ...mapGetters(["events", "eventDetail", "loading"])
+ ...mapGetters(["events", "loading"])
 },
 
 created() {
   this.fetchEvents()
-}
+},
+
 }
 </script>
 
@@ -93,7 +95,6 @@ created() {
   margin: 4rem 3rem;
 }
 
-
 h1 {
  font-weight: 900;
  font-size: 36px;
@@ -101,7 +102,6 @@ h1 {
  margin-bottom: 1.5rem;
  margin-left: 2rem;
 }
-
 @media screen and (max-width: 768px){
   h1 {
      font-size: 24px;
@@ -121,7 +121,6 @@ h1 {
   display: flex;
   flex-flow: row wrap;
 }
-
 .card {
   margin: 1.5rem 0.6rem 1rem 0.6rem;
 }
@@ -131,19 +130,22 @@ h1 {
 }
 
 p {
+  font-family: "SF Display";
   font-size: 12px;
   text-transform: uppercase;
   color: #4F4F4F;
 }
 
 h4 {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 18px;
   color: #333333;
+  padding: 5px 0 8px 0;
 }
 
 h5 {
   font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0.5px;
   color: #4F4F4F;
 }
@@ -151,7 +153,6 @@ h5 {
 .card__img-container {
   width: 100%;
 }
-
 img {
   width: 400px;
   height: 231px;
@@ -179,7 +180,6 @@ img {
 }
 
 @media screen and (max-width: 480px) {
-
   .events {
     margin: 2rem auto;
   }

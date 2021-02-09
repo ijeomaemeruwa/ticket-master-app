@@ -1,0 +1,38 @@
+@font-face {
+    font-family: Flutterwave;
+    font-weight: 400;
+    src: local("Flutterwave"),
+      url("../assets/fonts/FLW-Regular.ttf") format("truetype");
+    text-rendering: optimizeLegibility;
+  }
+
+  @font-face {
+    font-family: Flutterwave;
+    font-weight: 700;
+    font-style: normal;
+    src: local("Flutterwave"),
+      url("../assets/fonts/FLW-Bold.ttf") format("truetype");
+    text-rendering: optimizeLegibility;
+  }
+
+  @font-face {
+    font-family: Flutterwave;
+    font-weight: 900;
+    src: local("Flutterwave"),
+      url("../assets/fonts/Flutterwave-Black.ttf") format("truetype");
+    text-rendering: optimizeLegibility;
+  }
+
+  @font-face {
+    font-family: Flutterwave;
+    font-style: italic;
+    src: local("Flutterwave"),
+      url("../assets/fonts/FLW-Italic.ttf") format("truetype");
+    text-rendering: optimizeLegibility;
+  }
+
+  @font-face {
+    font-family: "SF Display";
+    font-weight: 500;
+    src: url("~@/assets/fonts/SF-UI-Display-Medium.otf");
+  }
