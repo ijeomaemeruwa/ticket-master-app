@@ -53,7 +53,7 @@ props: ['show'],
   .modal {
     width: 400px;
     height: 500px;
-}
+  }
 
 .modal-content {
     width: 100%;

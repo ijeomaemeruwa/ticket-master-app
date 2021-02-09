@@ -1,9 +1,17 @@
 <template>
 <nav class="nav">
-<h3>Logo</h3>
+<!-- <h3>Logo</h3> -->
+<router-link to="/">
+<img src="../assets/img/Logo.png" alt="logo" />
+</router-link>
+
 <div class="nav__links">
-  <router-link to="/cart"><p>I didn't get my tickets</p></router-link>
-  <div class="button__container">
+  <router-link 
+   to="/getTicket" 
+   class="router__link">
+   <p>I didn't get my tickets</p>
+  </router-link>
+  <div class="btn__container">
     <button class="app__button">
       Create your own event
     </button>
@@ -15,7 +23,7 @@
 
 <script>
 export default {
-    name: 'Nav'
+  name: 'Nav'
 }
 </script>
 
@@ -28,7 +36,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     height: 80px;
-    padding: 0 60px;
+    padding: 10px 60px;
 }
 
 h3 {
@@ -40,36 +48,39 @@ h3 {
     align-items: center;
 }
 
-p {
+.router__link {
+  text-decoration: none;
+}
+
+.nav__links p {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.5px;
   color: #333;
   margin-top: 0.6rem;
+  padding-right: 30px;
 }
 
-.button__container {
-    width: 206px;
-    height: 36.6px;
-   
+.nav__links p:hover {
+  color: #000;
 }
-/* 
-button {
-    width: 100%;
-    height: 100%;
-    background: #F5A623;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    margin-left: 30px;
-    outline: none;
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 12px;
-    text-align: center;
-    overflow: none;
-    box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
-} */
 
+.btn__container {
+  width: 206px;
+  height: 36.6px;
+}
+
+.btn__container button {
+  font-size: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .nav {
+    height: 80px;
+  }
+
+  .nav__links {
+    display: none;
+  }
+}
 </style>

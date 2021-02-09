@@ -4,7 +4,11 @@
 <main class="events">
   <h1>The best events happening now.</h1>
 
-  <section class="card__container">
+  <section v-if="loading" class="loading">
+    <h2>Loading...</h2>
+  </section>
+
+  <section v-else class="card__container">
   <div v-for="event in events" :key="event.id">
   <router-link 
     role="link" class="event__link"  
@@ -96,6 +100,21 @@ h1 {
  color: #333;
  margin-bottom: 1.5rem;
  margin-left: 2rem;
+}
+
+@media screen and (max-width: 768px){
+  h1 {
+     font-size: 24px;
+     margin: auto;
+  }
+}
+
+.loading {
+  height: 100vh;
+  margin: 0 auto;
+  padding: 3rem 0;
+  align-items: center;
+  text-align: center;
 }
 
 .card__container {

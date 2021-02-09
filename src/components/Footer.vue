@@ -11,7 +11,7 @@
 
 
 
-<style lang="scss" scoped>
+<style scoped>
  .footer {
     display: flex;
     flex-flow: row wrap;
@@ -19,26 +19,30 @@
     align-items: center;
     width: 80%;
     margin: 6rem auto 1rem auto;
-    
+ }
 
-  p {
+ .footer p {
     padding-left: 60px;
   }
- }
 
  .footer__links {
     display: flex;
     flex-flow: row wrap;
+ }
 
-  p {
+.footer__links  p {
    padding-right: 40px;
   }
- }
 
  p {
   font-size: 14px;
   color: #4A4A4A;
  }
 
+@media screen and (max-width: 768px) {
+    .footer {
+      text-align: left;
+    }
+}
  
 </style>

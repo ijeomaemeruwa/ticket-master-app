@@ -22,7 +22,7 @@
  <h6 v-if="event.tickets.length >= 1">
     {{ getMinMax(event.tickets) }}
  </h6>
- <!-- remember free ticket modal and ui -->
+
 <div class="button_container">
     <button v-if="event.tickets.length === 0" class="app__button" @click="showModal">
      Register for free
@@ -68,12 +68,11 @@
 <!-- Form Modal -->
 <Modal v-show="isModalVisible">
 <section class="modal__container">
-
-<div v-if="!registered">
+<div>
 <header class="modal__header">
     <p>REGISTER FOR EVENT</p>
-    <p @click="closeModal">
-      <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <p>
+      <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" @click="closeModal">
       <path d="M13.5 4.5l-9 9M4.5 4.5l9 9" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </p>
@@ -116,14 +115,14 @@
   </div>
 </div>
 <div class="btn__container">
-  <button class="app__button"  @click="register">
+  <button class="app__button">
     REGISTER
   </button>
 </div>
 </div>
 </div>
 
-<div class="success__modal" v-else>
+<!-- <div class="success__modal">
   <div class="success__modal-header">
   <p @click="closeModal">
     <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -145,14 +144,12 @@
   </div>
   </div>
     <h5 class="success__modal-text">
-          You have successfully registered for {{ event.name }}.
+    You have successfully registered for {{ event.name }}.
     </h5>
-</div>
+</div> -->
 
 </section>
 </Modal>
-
- <!-- xxx  -->
 
 </main>
 </div>
@@ -179,28 +176,19 @@ export default {
     return {
       event: {},
       isModalVisible: false,
-      registered: false,
-      data: {
-        name: '',
-        email: '',
-        phone: ''
-      },
+      // registered: false,
+      // data: {
+      //   name: '',
+      //   email: '',
+      //   phone: ''
+      // },
     }
     },
 
     methods: {
-    ...mapActions(['fetchEvents', 'freeEventRegister']),
+    ...mapActions(['fetchEvents']),
 
-    register: () => {
-    this.freeEventRegister({ data: this.data, id: this.id })
-      .then(response => {
-        response.data.status
-        this.registered = true
-      })
-      .catch(err => console.log(err))
-    },
-
-     showModal() {
+    showModal() {
       this.isModalVisible = true;
     },
 
@@ -208,7 +196,7 @@ export default {
       this.isModalVisible = false;
     },
 
-    // get minimum and maximum of a price
+// get minimum and maximum of a price
   getMinMax: (tickets) => {
     const price = []
   tickets.map(ticket => {
@@ -223,7 +211,7 @@ export default {
  },
 
 computed: {
-  ...mapGetters(['events', 'loading'])
+  ...mapGetters(['events'])
 },
 
 created () {
@@ -244,7 +232,7 @@ created () {
     display: flex;
     flex-direction: column;
 
-@media screen and (min-width: 768px) and (min-width: 1200px) {
+@media screen and (min-width: 1040px) {
   padding: 3rem 7rem;
 }
 }
@@ -257,12 +245,19 @@ created () {
     width: 100%;
     margin: 0 auto;
     justify-content: center;
+    align-items: center;
+}
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1040px) {
+  .event__content-main{
    display: flex;
    flex-direction: row-reverse;
-   flex-flow: wrap;
-}
+  }
+
+  .event__content-other {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 
@@ -274,7 +269,6 @@ created () {
 .event__content-other {
    padding-top: 3rem;
 }
-
 
 
 .event__content-img {

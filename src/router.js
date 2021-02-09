@@ -4,9 +4,7 @@ import Router from 'vue-router';
 import EventsListing from './views/events/EventsListing';
 import EventDetails from './views/events/EventDetails';
 import CartView from './views/cart/CartView';
-// import Payment from './views/cart/Payment';
-// import UserInformation from './views/cart/UserInformation.vue';
-import NoTicket from './views/ticket/NoTicket.vue';
+import GetTicket from './views/getTicket/GetTicket.vue';
 Vue.use(Router)
 
 
@@ -31,18 +29,11 @@ export const router = new Router({
             props: true
         },
         {
-            path: '/noTicket',
-            name: 'NoTicket',
-            component: NoTicket
+            path: '/getTicket',
+            name: 'GetTicket',
+            component: GetTicket
         },
-        { path: '*', redirect: '/' }
-        // {
-        //     path: '/payment',
-        //     component: Payment
-        // },
-        // {
-        //     path: '/userinfo',
-        //     component: UserInformation 
-        // },
+        { path: '*', redirect: '/' },
+       
         ]
 })

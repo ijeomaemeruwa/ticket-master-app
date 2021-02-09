@@ -37,8 +37,10 @@
 <!-- 2. Order and Payment Section-->
 <section class="checkout__section">
 
+    <h4>Checkout</h4>
+
 <!-- Header     -->
-<div class="checkout__section-header">
+<!-- <div class="checkout__section-header">
 <h3 v-if="currentTab !== 'CheckoutForm'"> Order summary </h3>
 <h3 v-else class="form" @click="currentTab = ''">
    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,17 +48,17 @@
    </svg>
    <span> Go back</span>
 </h3>
-</div>
+</div> -->
 <!-- xx -->
 
-<div v-if="currentTab === 'CheckoutForm'">
+<!-- <div v-if="currentTab === 'CheckoutForm'">
   <keep-alive>
   <component :total="totalOrder" :vat="vat" :subtotal="subtotal" :id="event.id" :is="currentTab"></component>
   </keep-alive>
-</div>
+</div> -->
 
 <!-- content -->
-<div class="" v-if="currentTab !== 'CheckoutForm'">
+<!-- <div class="" v-if="currentTab !== 'CheckoutForm'">
 
 <div class="checkout__summary-ticket">
 <div class="checkout__summary-ticket-info" v-for="(ticket,index) in tickets" :key="index">
@@ -84,7 +86,7 @@
     </button>
 </div>
 </div>
-</div>
+</div> -->
 <!-- xx -->
 
 
@@ -111,7 +113,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import Increment from '../../components/Increment';
 import Decrement from '../../components/Decrement';
-import CheckoutForm from './CheckoutForm';
+// import CheckoutForm from './CheckoutForm';
 
 export default {
  name: 'CartView',
@@ -119,7 +121,7 @@ export default {
  components: {
     Increment,
     Decrement,
-    CheckoutForm
+    // CheckoutForm
  },
 
 props: ['id'],

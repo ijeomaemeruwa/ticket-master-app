@@ -28,7 +28,6 @@ export default new Vuex.Store({
 
 //ACTIONS
   actions: {
-    //Event Functionalities
     async fetchEvents({ commit }) {
       commit('SET_LOADING', true)
       try {
@@ -45,18 +44,6 @@ export default new Vuex.Store({
       } catch(error) {
         console.log(error)
       }
-    },
-
-    freeEventRegister ({ id, data }) {
-    return new Promise((resolve, reject) => {
-    axios.post(`https://eventsflw.herokuapp.com/v1/events/${id}/register`, data)
-      .then(response => {
-        resolve(response)
-      })
-      .catch(err => {
-        reject(err)
-      })
-    })
     },
 
 

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+  <transition name="app" mode="out-in">
     <router-view />
+  </transition>
   </div>
 </template>
 
@@ -24,35 +26,79 @@ export default {
 
 :root {
   --background: #f2f2f2;
-  --primary-color: #333;
-  --accent: #F5A623;
-
+  --dark-1: #333;
+  --dark-2: #12122c;
+  --dark-3: #4a4a4a;
+  --dark-4: #4f4f4f;
+  --white: #fff;
+  --accent-1: #F5A623;
+  --accent-2: #828282;
+  --accent-input: #fdfdfd;
 }
+
+
 body {
   background: #f2f2f2;
   font-family: 'Poppins', sans-serif;
  }
 
-
-.app__button {
-    width: 100%;
-    height: 100%;
-    background: #F5A623;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    margin-left: 30px;
-    outline: none;
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 12px;
-    text-align: center;
-    overflow: none;
-    box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
+.app-enter-active {
+  animation: slide-in 0.3s ease-out forwards;
 }
 
-.content__button {
+.app-leave-active {
+  animation: slide-out 0.3s ease-out forwards;
+}
 
+@keyframes slide-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+.app__button {
+  width: 100%;
+  height: 100%;
+  background: #F5A623;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
+}
+
+
+.ticket__counter {
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background: #fff;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
 }
 </style>
