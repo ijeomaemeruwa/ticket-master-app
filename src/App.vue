@@ -85,6 +85,11 @@ body {
   font-weight: 600;
   font-size: 14px;
   box-shadow: 0px 1.01673px 1.01673px rgba(0, 0, 0, 0.5);
+  transition: 0.5s all ease;
+}
+.app__button:hover {
+  background: #da8b0a;
+  transition: 0.5s all ease;
 }
 
 

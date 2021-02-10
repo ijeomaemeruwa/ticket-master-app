@@ -1,4 +1,4 @@
-# events_app
+# TICKET MASTER
 
 ## Project setup
 ```
