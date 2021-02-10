@@ -4,11 +4,11 @@
 <main class="events">
 <h1>The best events happening now.</h1>
 
-<section v-if="loading" class="loading">
+<!-- <section v-if="loading" class="loading">
   <img src="../../assets/img/loading.svg" alt="loading" />
-</section>
+</section> -->
 
-<section v-else class="card__container">
+<section class="card__container">
 <div v-for="event in events" :key="event.id">
 <router-link 
   role="link" class="event__link"  

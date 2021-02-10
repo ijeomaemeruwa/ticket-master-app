@@ -5,7 +5,11 @@ import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
 const vuexLocal = new VuexPersistence({
-  storage: window.localStorage
+  key: 'vuex',
+  storage: window.localStorage,
+  reducer: state => ({
+    events: state.events
+  })
 })
 
 
