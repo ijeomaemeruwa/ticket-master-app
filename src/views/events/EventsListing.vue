@@ -5,7 +5,7 @@
   <h1>The best events happening now.</h1>
 
   <section v-if="loading" class="loading">
-    <h3>Loading...</h3>
+    <img src="../../assets/img/loading.svg" alt="loading" />
   </section>
 
   <section v-else class="card__container">
@@ -16,15 +16,15 @@
   >
   <div class="card">
     <div class="card__img-container">
-      <img v-if="event.image" 
-        :src="event.image" 
-        :alt="`${event.name} event`"
-      />
-      <img v-else 
-        class="lazy"
-       :src="require('../../assets/img/defaultimg.jpg')" 
-       :alt="`${event.name} event`"
-      />
+    <img v-if="event.image" 
+      :src="event.image" 
+      :alt="`${event.name} event`"
+    />
+    <img v-else 
+      class="lazy"
+      :src="require('../../assets/img/defaultimg.jpg')" 
+      :alt="`${event.name} event`"
+    />
     </div>
   <div class="card__content">
     <p>{{ new Date(event.start_time).toDateString() }}</p>
@@ -110,11 +110,14 @@ h1 {
 }
 
 .loading {
-  height: 100vh;
+  height: 60vh;
   margin: 0 auto;
-  padding: 3rem 0;
+  padding: 2rem 0;
   align-items: center;
   text-align: center;
+}
+.loading img {
+  width: 40px;
 }
 
 .card__container {

@@ -1,6 +1,5 @@
 <template>
-<section class="form"
->
+<section class="form">
 <div class="form__container">
   <label for="name" class="form-label">Full name</label>
   <div class="form-input__container">
@@ -9,6 +8,7 @@
       v-model="name"
       type="text"
       name="name"
+      placeholder="Firstname Lastname"
       required
     />
   </div>
@@ -20,6 +20,7 @@
       v-model="email"
       type="email"
       name="email"
+      placeholder="name@example.com"
       required
     />
   </div>
@@ -28,7 +29,6 @@
   <div class="form-input__container">
      <input
       class="form-input"
-      id="name"
       v-model="phone"
       type="text"
       name="phone"
@@ -39,9 +39,8 @@
 <div class="checkout__summary">
   <div class="checkout__summary-details">
    <p>TOTAL PAYMENT</p>
-   <h6 class="total-amount">N{{ localeString(totalOrder) }}</h6>
+   <h6>N{{ localeString(totalOrder) }}</h6>
   </div>
-  
 </div>
 
  <!-- Payment Button      -->
@@ -63,27 +62,25 @@ export default {
 
 data () {
   return {
-    data: {
-      name: '',
-      email: '',
-      phone: ''
-    }
+   name: '',
+   email: '',
+   phone: ''
   }
 },
 
 props: ['totalOrder', 'vat', 'subtotal', 'id'],
 
 methods: {
-  localeString: function(price) {
-    return price.toLocaleString();
-  },
+localeString: function(price) {
+  return price.toLocaleString();
+},
 
 makePayment: function () {
 const tickets = {}
 this.tickets.map(ticket => {
 if (ticket.count >= 1) {
   tickets[ticket.id] = ticket.count
-  }
+}
 })
 
 const data = {
@@ -103,9 +100,9 @@ const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
   country: 'NG',
   payment_options: 'card',
   customer: {
-    email: this.data.email,
-    phone_number: this.data.phone,
-    name: this.data.name
+    email: this.email,
+    phone_number: this.phone,
+    name: this.name
   },
 
   callback: function () {
@@ -120,9 +117,8 @@ const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
 
   onclose: function () {},
     customizations: {
-      title: 'Ticke Master',
-      description: 'Payment for Event',
-      logo: 'https://flutterwave.com/images/logo-colored.svg',
+      title: 'Ticket Master',
+      description: 'Payment for Event'
     }
     })
   }
@@ -174,6 +170,7 @@ created() {
   border-radius: 4px;
   color: #333;
   outline-color: #E0E0E0;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .checkout__summary {

@@ -12,8 +12,13 @@
   </button>
 </header>
 <section class="cart__content">
-<h2>{{event.name}}</h2>
-<h4>{{ new Date(event.start_time).toDateString() }}</h4>
+    <div v-if="tickets.length === 0">
+        YOUR CART IS EMPTY
+    </div>
+    <div v-else>
+        <h2>{{event.name}}</h2>
+        <h4>{{ new Date(event.start_time).toDateString() }}</h4>
+    </div>
 <div class="cart__content-tickets">
     <div class="cart__content-ticket-type" v-for="(ticket, index) in tickets" :key="index">
     <p>{{ ticket.name }}</p>
@@ -78,7 +83,7 @@
 </div>
 </div> 
  <div class="btn__container">
-   <button class="app__button" @click="currentTab = 'CheckoutForm'">
+   <button class="app__button" @click="currentTab = 'CheckoutForm'" :disabled="order">
     CONTINUE
    </button>
  </div> 

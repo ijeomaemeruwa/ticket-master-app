@@ -1,9 +1,10 @@
 <template>
 <nav class="nav">
-<!-- <h3>Logo</h3> -->
+<div class="logo">
 <router-link to="/">
 <img src="../assets/img/Logo.png" alt="logo" />
 </router-link>
+</div>
 
 <div class="nav__links">
   <router-link 
@@ -30,22 +31,27 @@ export default {
 
 <style scoped>
 .nav {
-    display: flex;
-    flex-flow: row wrap;
-    width: 95%;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-    padding: 10px 60px;
+  display: flex;
+  flex-flow: row wrap;
+  width: 95%;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  padding: 10px 60px;
 }
 
-h3 {
-    padding-left: 25px;
+.logo {
+  padding-left: 25px;
+}
+@media screen and (max-width: 768px) {
+  .logo {
+     padding-left: 10px; 
+  }
 }
 
 .nav__links {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .router__link {
@@ -54,7 +60,7 @@ h3 {
 
 .nav__links p {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0.5px;
   color: #333;
   margin-top: 0.6rem;
@@ -73,6 +79,7 @@ h3 {
 .btn__container button {
   font-size: 12px;
 }
+
 
 @media screen and (max-width: 768px) {
   .nav {

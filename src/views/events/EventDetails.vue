@@ -180,21 +180,6 @@ created() {
   const id = this.$route.params.id
   this.event = this.events.find(event => parseInt(event.id) === parseInt(id))
 },
-
-mounted() {
-  if(localStorage.event) {
-    this.events = JSON.parse(localStorage);
-  }
-},
-
-watch: {
-  events: {
-    handler(data){
-      localStorage.events = JSON.stringify(data);
-    },
-    deep: true
-  }
-}
 }
 </script>
 
@@ -202,13 +187,13 @@ watch: {
 
 <style scoped>
 .event {
-    padding: 3rem 1rem;
-    background-image: url("../../assets/img/bglines.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
+  padding: 3rem 1.2rem;
+  background-image: url("../../assets/img/bglines.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }
 .event__content-main,
 .event__content-other {

@@ -2,27 +2,27 @@
 <transition name="modal-fade">
 <div class="modal-backdrop">
 <div class="modal"   
-    role="dialog"
-    aria-labelledby="modalTitle"
-    aria-describedby="modalDescription"
+  role="dialog"
+  aria-labelledby="modalTitle"
+  aria-describedby="modalDescription"
  >
  <div class="modal-content">
-   <slot></slot>
+  <slot />
  </div> 
 </div>
 </div>
 </transition>
 </template>
 
+
 <script>
 export default {
- name: 'Modal',
+name: 'Modal',
 
 props: ['show'],
 
 }
 </script>
-
 
 
 <style scoped>

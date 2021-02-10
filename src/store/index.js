@@ -1,7 +1,12 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import axios from 'axios';
-Vue.use(Vuex);
+import VuexPersistence from 'vuex-persist'
+
+Vue.use(Vuex)
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
 
 export default new Vuex.Store({
@@ -61,7 +66,7 @@ actions: {
       return event
   })
   commit('SET_TICKETS', newTickets)
-  }
+  },
 },
 
 
@@ -102,6 +107,8 @@ actions: {
       state.tickets = [...tickets]
     }
   },
+
+  plugins: [vuexLocal.plugin]
 })
 
   
