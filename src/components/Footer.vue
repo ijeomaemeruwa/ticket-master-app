@@ -21,9 +21,9 @@
     margin: 6rem auto 1rem auto;
  }
 
- .footer p {
-    padding-left: 60px;
-  }
+ /* .footer p {
+    padding-left: 30px;
+  } */
 
  .footer__links {
     display: flex;
@@ -31,7 +31,7 @@
  }
 
 .footer__links  p {
-   padding-right: 40px;
+   padding-right: 50px;
   }
 
  p {
@@ -41,10 +41,10 @@
 
 @media screen and (max-width: 768px) {
 .footer {
-   text-align: center;
    display: flex;
    flex-direction: column;
    margin: 0 auto;
+   text-align: center;
    width: 100%;
 }
 

@@ -149,7 +149,11 @@ h5 {
 
 @media screen and (max-width: 768px) {
   h5 {
-    width: 80%;
+    width: 90%;
+  }
+
+  .getticket__card {
+    padding: 3rem 1.2rem;
   }
 }
 </style>
