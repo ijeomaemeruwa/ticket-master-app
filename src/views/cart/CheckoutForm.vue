@@ -109,8 +109,8 @@ const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
   axios.post('https://eventsflw.herokuapp.com/v1/orders', data)
     .then(response => {
       console.log(response)
-      this.$store.dispatch('clear')
-      window.href = '/'
+      this.clear
+      window.location.href = '/'
     })
     .catch(err => console.error(err))
   },
@@ -125,7 +125,7 @@ const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
 },
 
 computed: {
-  ...mapGetters(['tickets'])
+  ...mapGetters(['tickets', 'clear'])
 },
 
 created() {

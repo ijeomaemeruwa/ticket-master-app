@@ -421,14 +421,14 @@ img {
 @media screen and (max-width: 768px) {
 .event__content-img {
   width: 100%;
-  }
+}
 
- img {
-    width: 100%;
-    height: 100%;
-  }
-  .event__content-date{
-    padding-top: 1.2rem;
-  }
+img {
+  width: 100%;
+  height: 100%;
+}
+.event__content-date{
+  padding: 1.5rem 0;
+}
 }
 </style>

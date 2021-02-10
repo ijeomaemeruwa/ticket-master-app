@@ -76,6 +76,7 @@ body {
 .app__button {
   width: 100%;
   height: 100%;
+  font-family: 'Flutterwave';
   background: #F5A623;
   border: none;
   border-radius: 4px;

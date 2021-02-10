@@ -15,7 +15,7 @@ export default new Vuex.Store({
   state: {
     events: [],
     loading: false,
-    tickets: [],
+    tickets: []
   },
 
 

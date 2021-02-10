@@ -40,9 +40,20 @@
  }
 
 @media screen and (max-width: 768px) {
-    .footer {
-      text-align: left;
-    }
+.footer {
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   margin: 0 auto;
+   width: 100%;
+}
+
+.footer p {
+   padding: 0;
+}
+.footer__links p {
+   padding: 15px;
+}
 }
  
 </style>

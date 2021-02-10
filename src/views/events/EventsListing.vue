@@ -2,44 +2,44 @@
 <div>
 <Nav />
 <main class="events">
-  <h1>The best events happening now.</h1>
+<h1>The best events happening now.</h1>
 
-  <section v-if="loading" class="loading">
-    <img src="../../assets/img/loading.svg" alt="loading" />
-  </section>
+<section v-if="loading" class="loading">
+  <img src="../../assets/img/loading.svg" alt="loading" />
+</section>
 
-  <section v-else class="card__container">
-  <div v-for="event in events" :key="event.id">
-  <router-link 
-    role="link" class="event__link"  
-    :to="{ name: 'EventDetails', params: { id: event.id }}"
-  >
-  <div class="card">
-    <div class="card__img-container">
-    <img v-if="event.image" 
-      :src="event.image" 
-      :alt="`${event.name} event`"
-    />
-    <img v-else 
-      class="lazy"
-      :src="require('../../assets/img/defaultimg.jpg')" 
-      :alt="`${event.name} event`"
-    />
-    </div>
-  <div class="card__content">
-    <p>{{ new Date(event.start_time).toDateString() }}</p>
-    <h4>{{ event.name }}</h4>
-      <h5 class="free" v-if="event.is_free || Object.keys(event.tickets).length === 0">
-        Free
-      </h5>
-      <h5 class="sold-out" v-else-if="event.is_sold_out">Sold out</h5>
-      <h5 v-else>{{ getMinMax(event.tickets) }}</h5>
+<section v-else class="card__container">
+<div v-for="event in events" :key="event.id">
+<router-link 
+  role="link" class="event__link"  
+  :to="{ name: 'EventDetails', params: { id: event.id }}"
+>
+<div class="card">
+  <div class="card__img-container">
+  <img v-if="event.image" 
+    :src="event.image" 
+    :alt="`${event.name} event`"
+  />
+  <img v-else 
+    class="lazy"
+    :src="require('../../assets/img/defaultimg.jpg')" 
+    :alt="`${event.name} event`"
+  />
   </div>
-  </div>
-  </router-link>
+<div class="card__content">
+  <p>{{ new Date(event.start_time).toDateString() }}</p>
+  <h4>{{ event.name }}</h4>
+    <h5 class="free" v-if="event.is_free || Object.keys(event.tickets).length === 0">
+      Free
+    </h5>
+    <h5 class="sold-out" v-else-if="event.is_sold_out">Sold out</h5>
+    <h5 v-else>{{ getMinMax(event.tickets) }}</h5>
+</div>
+</div>
+</router-link>
 
-  </div>
-  </section>
+</div>
+</section>
 </main>
 <Footer />
 </div>
@@ -64,7 +64,7 @@ methods: {
 
   // get minimum and maximum of a price
   getMinMax: function (tickets) {
-      const price = []
+    const price = []
     tickets.map(ticket => {
       price.push(ticket.price)
     })
@@ -73,7 +73,14 @@ methods: {
     let minMax
     max === min ? minMax = `N${max.toLocaleString()}` : minMax = `N${min.toLocaleString()} - N${max.toLocaleString()}`
     return minMax
-  }
+  },
+
+  // handleScrolledToBottom (isVisible) {
+  //   if(!isVisible) {
+  //     this.page++
+  //     this.fetchEvents()
+  //   }
+  // }
 },
 
 computed:{
@@ -103,10 +110,11 @@ h1 {
  margin-left: 2rem;
 }
 @media screen and (max-width: 768px){
-  h1 {
-     font-size: 24px;
-     margin: auto;
-  }
+h1 {
+  font-size: 24px;
+  margin: auto;
+  padding-left: 15px;
+}
 }
 
 .loading {
@@ -117,7 +125,7 @@ h1 {
   text-align: center;
 }
 .loading img {
-  width: 40px;
+  width: 30px;
 }
 
 .card__container {
