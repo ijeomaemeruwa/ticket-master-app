@@ -8,7 +8,7 @@
   <img src="../../assets/img/loading.svg" alt="loading" />
 </section>
 
-<section class="card__container">
+<section v-else class="card__container">
 <div v-for="event in events" :key="event.id">
 <router-link 
   role="link" class="event__link"  
