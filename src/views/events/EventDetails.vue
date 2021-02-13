@@ -305,13 +305,13 @@ img {
   margin: 1rem 0;
 }
 .event__map {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .event__map p {
-    padding-left: 10px;
-    font-size: 16px;
-    color: #F5A623;
+  padding-left: 10px;
+  font-size: 16px;
+  color: #F5A623;
 }
 .event__content-other h6 {
   font-size: 16px;
@@ -396,7 +396,7 @@ img {
 
 @media screen and (min-width: 1040px) {
  .event{
-   padding: 3rem 9rem;
+   padding: 3rem 7rem;
  } 
  .event__content-main{
    display: flex;

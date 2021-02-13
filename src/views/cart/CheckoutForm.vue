@@ -1,40 +1,53 @@
 <template>
-<section class="form">
+<form class="form" @submit.prevent="makePayment">
 <div class="form__container">
-  <label for="name" class="form-label">Full name</label>
-  <div class="form-input__container">
-    <input
-      class="form-input"
-      v-model="name"
-      type="text"
-      name="name"
-      placeholder="Firstname Lastname"
-      required
-    />
-  </div>
+
+<div class="form__container-section">
+<label 
+  for="name" class="form-label">Full name<span>*</span>
+</label>
+<div class="form-input__container">
+  <input
+    class="form-input"
+    :class="{ 'is-invalid': validationStatus($v.name) }"
+    v-model.trim="$v.name.$model"
+    type="text"
+    name="name"
+    placeholder="Firstname Lastname"
+  />
+</div>
+</div>
+
+<div class="form__container-section"> 
+<label 
+  for="email" class="form-label">Email address<span>*</span>
+</label>
+<div class="form-input__container">
+  <input
+    class="form-input"
+    :class="{ 'is-invalid': validationStatus($v.email) }"
+    v-model.trim="$v.email.$model"
+    type="email"
+    name="email"
+    placeholder="name@example.com"
+  />
+</div>
+</div>
   
-  <label for="email" class="form-label">Email address</label>
-  <div class="form-input__container">
-    <input
-      class="form-input"
-      v-model="email"
-      type="email"
-      name="email"
-      placeholder="name@example.com"
-      required
-    />
-  </div>
-  
-  <label for="phone" class="form-label">Phone number</label>
-  <div class="form-input__container">
-     <input
-      class="form-input"
-      v-model="phone"
-      type="text"
-      name="phone"
-      required
-    />
-  </div>
+<div class="form__container-section"> 
+<label 
+  for="phone" class="form-label">Phone number<span>*</span>
+</label>
+<div class="form-input__container">
+  <input
+    class="form-input"
+    :class="{ 'is-invalid': validationStatus($v.phone) }"
+    v-model="$v.phone.$model"
+    type="text"
+    name="phone"
+  />
+</div>
+</div>
 
 <div class="checkout__summary">
   <div class="checkout__summary-details">
@@ -43,46 +56,64 @@
   </div>
 </div>
 
+
  <!-- Payment Button      -->
 <div class="btn__container">
-  <button class="app__button" @click="makePayment">
-    PAY N{{ localeString(totalOrder) }}
-  </button>
+<button 
+  class="app__button"  
+  :disabled="$v.$invalid || $v.$error"
+  >
+  PAY N{{ localeString(totalOrder) }}
+</button>
 </div>
 </div>
-</section>
+</form>
 </template>
 
 
 <script>
 import { mapGetters } from 'vuex';
+import { required, email } from 'vuelidate/lib/validators';
 import axios from 'axios';
 export default {
   name: 'TabContainer',
 
 data () {
-  return {
-   name: '',
-   email: '',
-   phone: ''
-  }
+return {
+  name: '',
+  email: '',
+  phone: ''
+}
+},
+
+
+validations: {
+  name: { required },
+  email: { required, email },
+  phone: { required }
 },
 
 props: ['totalOrder', 'vat', 'subtotal', 'id'],
 
 methods: {
+validationStatus: function(validation) {
+  return typeof validation !== "undefined" ? validation.$error: false
+},
+
 localeString: function(price) {
   return price.toLocaleString();
 },
 
 makePayment: function () {
+this.$v.$touch()
+if (this.$v.$invalid || this.$v.$error) return
+
 const tickets = {}
 this.tickets.map(ticket => {
 if (ticket.count >= 1) {
   tickets[ticket.id] = ticket.count
 }
 })
-
 const data = {
   ...this.data,
   base_amount: this.totalOrder,
@@ -90,7 +121,6 @@ const data = {
   event_id: parseInt(this.id),
   tickets_bought: tickets
 }
-
 const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
   window.FlutterwaveCheckout({
   public_key: TEST_KEY,
@@ -104,7 +134,6 @@ const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
     phone_number: this.phone,
     name: this.name
   },
-
   callback: function () {
   axios.post('https://eventsflw.herokuapp.com/v1/orders', data)
     .then(response => {
@@ -114,7 +143,6 @@ const TEST_KEY = 'FLWPUBK_TEST-9b90c33d1d220b19acf9bd4e05b8a3dc-X'
     })
     .catch(err => console.error(err))
   },
-
   onclose: function () {},
     customizations: {
       title: 'Ticket Master',
@@ -143,9 +171,11 @@ created() {
   margin: auto;
 }
 .form__container {
-  padding: 1.5rem 2rem;
+  padding: 2rem;
 }
-
+.form__container-section {
+  padding-bottom: 20px;
+}
 .form-label {
   font-family: 'Open Sans', sans-serif;
   font-weight: normal;
@@ -153,13 +183,15 @@ created() {
   letter-spacing: 0.5px;
   color: #333333;
 }
-
+.form-label span {
+  color: red;
+}
 .form-input__container {
   display: flex;
   flex-direction: column;
   max-width: 368px;
   height: 48px; 
-  margin: 10px 0;
+  margin-top: 10px;
 }
 .form-input {
   width: 100%;
@@ -172,6 +204,10 @@ created() {
   outline-color: #E0E0E0;
   font-family: 'Open Sans', sans-serif;
 }
+.is-invalid {
+  border: 1px solid red;
+}
+
 
 .checkout__summary {
    padding: 1rem 0;

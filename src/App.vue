@@ -92,6 +92,11 @@ body {
   background: #da8b0a;
   transition: 0.5s all ease;
 }
+button:disabled {
+  cursor: not-allowed;
+  background: #da8b0a;
+  opacity: 0.8;
+}
 
 
 .ticket__counter {
