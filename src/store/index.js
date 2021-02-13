@@ -8,7 +8,8 @@ const vuexLocal = new VuexPersistence({
   key: 'vuex',
   storage: window.localStorage,
   reducer: state => ({
-    events: state.events
+    events: state.events,
+    tickets: state.tickets
   })
 })
 
